@@ -64,8 +64,8 @@ func velocity() {
 		roundRegex, _ := regexp.Compile(`(\d+) rounds per box`)
 		velocityRegex, _ := regexp.Compile(`(\d+ fps)`)
 		
-		//count := roundRegex.FindStringSubmatch(details)
-		//velocity := velocityRegex.FindStringSubmatch(details)
+		count := roundRegex.FindStringSubmatch(details)
+		velocity := velocityRegex.FindStringSubmatch(details)
 
 		ammo := Ammo{
 			Title:			title,
@@ -78,31 +78,6 @@ func velocity() {
 
 		ammoList = append(ammoList, ammo)
 	})
-
-	// 	course := Course{
-	// 		Title:       title,
-	// 		URL:         e.Request.URL.String(),
-	// 		Description: e.ChildText("div.content"),
-	// 		Creator:     e.ChildText("div.creator-names > span"),
-	// 	}
-	// 	// Iterate over rows of the table which contains different information
-	// 	// about the course
-	// 	e.ForEach("table.basic-info-table tr", func(_ int, el *colly.HTMLElement) {
-	// 		switch el.ChildText("td:first-child") {
-	// 		case "Language":
-	// 			course.Language = el.ChildText("td:nth-child(2)")
-	// 		case "Level":
-	// 			course.Level = el.ChildText("td:nth-child(2)")
-	// 		case "Commitment":
-	// 			course.Commitment = el.ChildText("td:nth-child(2)")
-	// 		case "How To Pass":
-	// 			course.HowToPass = el.ChildText("td:nth-child(2)")
-	// 		case "User Ratings":
-	// 			course.Rating = el.ChildText("td:nth-child(2) div:nth-of-type(2)")
-	// 		}
-	// 	})
-	// 	courses = append(courses, course)
-	// })
 
 	// start scraping
 	c.Visit("https://www.velocityammosales.com/collections/9-mm")
