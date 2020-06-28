@@ -1,0 +1,1 @@
+# Ammo web scraper written with Go and Colly
