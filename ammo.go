@@ -5,13 +5,13 @@ import (
 	"encoding/json"	
 	"os"
 	"regexp"
-
 	"github.com/gocolly/colly"
 )
 
 // store ammo information
 type Ammo struct {
 	Title			string
+	Caliber			string
 	Price			string
 	Count			string
 	Velocity		string
@@ -24,6 +24,12 @@ func main() {
 }
 
 func velocity() {
+	// should walk through each listing on the left bars so it can be done ammo type specific
+	// go through each and grab general info from title if possible
+	// grab items from short desc if possible
+	// grab items from description if possible
+	// calculate CPR
+
 	// Instantiate default collector
 	c := colly.NewCollector(	
 		colly.AllowedDomains("www.velocityammosales.com", "velocityammosales.com"),
@@ -61,17 +67,22 @@ func velocity() {
 		price := e.ChildText("span.product-price")
 		details := e.ChildText("div.tab.active")
 
-		roundRegex, _ := regexp.Compile(`(\d+) rounds per box`)
-		velocityRegex, _ := regexp.Compile(`(\d+ fps)`)
-		
+		roundRegex, _ := regexp.Compile(`(?i)(\d+) rounds per box`)
 		count := roundRegex.FindStringSubmatch(details)
+	
+		log.Println(count[1])
+
+		velocityRegex, _ := regexp.Compile(`(?i)(\d+ fps)`)
 		velocity := velocityRegex.FindStringSubmatch(details)
+
+		log.Println(velocity[1])
 
 		ammo := Ammo{
 			Title:			title,
 			Price:			price,
-			Count:			"",
-			Velocity:		"",
+			Count:			count[0],
+			Velocity:		velocity[0],
+			Weight:			weight,
 			URL:			url,
 			CPR:			"",
 		}
